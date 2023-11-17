@@ -3,7 +3,6 @@ class TrieNode
 {
 
 public:
-
     char data;
     TrieNode ** children;
     bool isTerminal;

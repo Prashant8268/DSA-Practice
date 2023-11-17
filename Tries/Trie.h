@@ -12,7 +12,6 @@ class Trie{
     }
 
     void insertWord(TrieNode * root,string word){
-
         // Base case
         if(word.size()==0){
             root->isTerminal = true;
@@ -32,10 +31,10 @@ class Trie{
         }
 
         // recursive call; 
-        insertWord(word.substr(1));
+        insertWord(child, word.substr(1));
 
     }
-    // above function is for us. below is for user
+    // above function is helper function . below is for user
     void insertWord(string word){
         insertWord(root, word);
     }
@@ -56,7 +55,38 @@ class Trie{
     bool searchWord(string word){
         return searchWord(root, word);
     }
+
+    void removeWord(TrieNode * root , string word){
+        if(word.size()==0){
+            root->isTerminal = false;
+            return ;
+        }
+        TrieNode * child ; 
+        int index = word[0]-'a';
+        if(root->children[index]!=NULL){
+            child = root->children[index];
+        }
+        else{
+            return ;
+        }
+        removeWord(child, word.substr(1));
+        if(child->isTerminal==false){
+            for(int i=0; i<26 ; i++){
+                if(child->children[i]!=NULL){
+                    return;
+                }
+            }
+            delete child;
+            root->children[index]=NULL;
+        }
+    }
+
+    void removeWord(string word){
+        removeWord(root, word);
+    }
 };
+
+
 
 
 
